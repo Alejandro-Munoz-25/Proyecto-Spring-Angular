@@ -1,0 +1,51 @@
+<div class="card bg-light my-4 col-12 col-md-8 p-0 mx-auto" *ngIf="factura">
+
+  <div class="card-header">
+    {{titulo}}: {{factura.descripcion}}
+  </div>
+  <div class="card-body">
+    <h4 class="card-title">
+      <a [routerLink]="['/clientes']" routerLinkActive="router-link-active" class="btn btn-light">&laquo; Volver</a>
+    </h4>
+    <ul class="list-group my-2">
+      <li class="list-group-item bg-dark text-white">Datos del Cliente</li>
+      <li class="list-group-item ">Nombre: {{factura.cliente.nombre+' '+factura.cliente.apellido}}</li>
+      <li class="list-group-item ">Email: {{factura.cliente.email}}</li>
+      <li class="list-group-item ">Región: {{factura.cliente.region.nombre}}</li>
+    </ul>
+    <ul class="list-group my-2">
+      <li class="list-group-item bg-dark text-white">Datos de la Factura</li>
+      <li class="list-group-item ">Folio: {{factura.id}}</li>
+      <li class="list-group-item ">Descripción: {{factura.descripcion}}</li>
+      <li class="list-group-item ">Fecha de creación: {{factura.createAt}}</li>
+    </ul>
+    <table class="table table-striped table-hover table-responsive-sm p-0 col-sm-12 table-bordered my-3">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of factura.items">
+          <td>{{item.producto.nombre}}</td>
+          <td>{{item.producto.precio}}</td>
+          <td>{{item.cantidad}}</td>
+          <td>{{item.importe}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4 class="float-right"><span>Gran Total</span>: <span class="badge badge-secondary">{{factura.total}} </span></h4>
+    <div class="card border-info mb-4 col-7 col-md-5 p-0">
+      <div class="card card-header">
+        Observaciones
+      </div>
+      <div class="card card-body">
+        <p *ngIf="factura.observacion">{{factura.observacion}}</p>
+        <p *ngIf="!factura.observacion">No hay observaciones</p>
+      </div>
+    </div>
+  </div>
+</div>

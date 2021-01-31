@@ -1,0 +1,62 @@
+<app-perfil *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></app-perfil>
+
+<div class="card border-primary my-3">
+  <div class="card-header">Clientes</div>
+  <div class="card-body text-primary">
+    <h3 class="card-title">Listado de Clientes</h3>
+
+    <div class="my-2 text-left"><button [routerLink]="['/clientes/form']" routerLinkActive="router-link-active"
+        class="btn btn-rounded btn-primary " type="button" *ngIf="authService.hasRole('ROLE_ADMIN')">Crear
+        Cliente</button></div>
+    <div class="alert alert-info" *ngIf="clientes.length==0">
+      No hay registros en la BD
+    </div>
+    <div class="overflow-auto col-12">
+
+      <table class="table table-bordered justify-content-center mx-auto table-striped text-primary"
+        *ngIf="clientes.length>0">
+        <thead class="thead-dark">
+          <tr>
+            <th *ngIf="authService.hasRole('ROLE_USER')" class="align-middle text-center" scope="col">#</th>
+            <th class="align-middle text-center" scope="col">Nombre</th>
+            <th class="align-middle text-center" scope="col">Apellido</th>
+            <th class="align-middle text-center" scope="col">Email</th>
+            <th class="align-middle text-center" scope="col">Fecha</th>
+            <th *ngIf="authService.hasRole('ROLE_ADMIN')" class="align-middle text-center" scope="col">Crear Facturas
+            </th>
+            <th *ngIf="authService.hasRole('ROLE_ADMIN')" class="align-middle text-center" scope="col">Editar</th>
+            <th *ngIf="authService.hasRole('ROLE_ADMIN')" class="align-middle text-center" scope="col">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cliente of clientes">
+            <td *ngIf="authService.hasRole('ROLE_USER')" class="align-middle text-center p-1 px-3">
+              <img data-toggle="modal" data-target="#my-modal" *ngIf="!cliente?.foto"
+                style="width:70px;cursor: pointer;" (click)="abrirModal(cliente)" src="{{urlBackend}}/images/user.png"
+                alt="No tiene foto perfil" class="rounded">
+              <img data-toggle="modal" data-target="#my-modal" *ngIf="cliente?.foto"
+                style="width:70px;cursor: pointer;height: 50px;" (click)="abrirModal(cliente)"
+                src="{{getFoto(cliente.foto)}}" alt="Foto de Perfil" class="rounded">
+            </td>
+            <td class="align-middle text-center">{{cliente.nombre }}</td>
+            <!-- <td class="align-middle text-center">{{cliente.apellido | uppercase}}</td> -->
+            <td class="align-middle text-center">{{cliente.apellido}}</td>
+            <td class="align-middle text-center">{{cliente.email}}</td>
+            <td class="align-middle text-center">{{cliente.createAt|date:"EEEE dd,MM,yyyy" }}</td>
+            <td *ngIf="authService.hasRole('ROLE_ADMIN')" class="align-middle text-center"> <button type="button"
+                name="nuevaFactura" [routerLink]="['/facturas/form',cliente.id]" class="btn btn-success btn-sm">Nueva
+                Factura</button></td>
+            <td *ngIf="authService.hasRole('ROLE_ADMIN')" class="align-middle text-center"> <button type="submit"
+                name="editar" [routerLink]="['/clientes/form/',cliente.id]" class="btn px-4 btn-primary">Editar</button>
+            </td>
+            <td *ngIf="authService.hasRole('ROLE_ADMIN')" class="align-middle text-center"> <button type="submit"
+                name="eliminar" (click)="delete(cliente)" class="btn btn-danger">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <paginator-nav class="justify-content-center pagination-sm" *ngIf="paginador" [paginador]="paginador">
+    </paginator-nav>
+  </div>
+</div>

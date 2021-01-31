@@ -1,0 +1,90 @@
+<!-- <ul *ngIf="error" class="alert alert-danger my-2">
+  <li *ngFor="let err of errores">{{err}}</li>
+</ul> -->
+<div class="card bg-dark text-white my-3 col-12 col-md-10 col-lg-9 mx-auto">
+  <div class="card-header">{{titulo}}</div>
+  <div class="card-body">
+
+    <form #formCliente="ngForm">
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-3">Nombre</label>
+        <div class="col-sm-8">
+          <input type="text" [(ngModel)]="cliente.nombre" #nombre="ngModel" class="form-control" name="nombre"
+            placeholder="nombre"> <!-- required minlength="4" -->
+          <div class="alert alert-danger my-2" *ngIf="error?.nombre">
+            <span>{{error.nombre}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="apellido" class="col-form-label col-sm-3">Apellido</label>
+        <div class="col-sm-8">
+          <input type="text" [(ngModel)]="cliente.apellido" class="form-control" #apellido="ngModel" name="apellido"
+            placeholder="apellido">
+          <!-- required -->
+
+          <div class="alert alert-danger my-2" *ngIf="error?.apellido">
+
+            <span>{{error.apellido}}</span>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="email" class="col-form-label col-sm-3">Email</label>
+        <div class="col-sm-8">
+          <input type="text" [(ngModel)]="cliente.email" class="form-control" name="email" placeholder="email"
+            #email="ngModel">
+          <!-- email required -->
+          <div class="alert alert-danger my-2" *ngIf="error?.email">
+
+            <span>{{error.email}}</span>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="createAt" class="col-form-label col-sm-3">Fecha</label>
+        <div class="col-sm-8">
+          <div class="d-flex">
+            <mat-datepicker-toggle [for]="miDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #miDatepicker></mat-datepicker>
+            <input name="createAt" [(ngModel)]="cliente.createAt" class="form-control" color="accent"
+              placeholder="dd/MM/yyyy" [matDatepicker]="miDatepicker">
+          </div>
+          <div class="alert alert-danger d-block flex-nowrap my-2" *ngIf="error?.createAt">
+            <span>{{error.createAt}}</span>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-group row">
+        <label for="region" class="col-form-label col-sm-3">Región</label>
+        <div class="col-sm-8">
+          <select [compareWith]="compararRegion" name="region" [(ngModel)]="cliente.region" class="form-control"
+            placeholder="">
+            <option [ngValue]="undefined">--- Seleccionar Región ---</option>
+            <option *ngFor="let region of regiones" [ngValue]="region">{{region.nombre}}</option>
+          </select>
+          <div class="alert alert-danger my-2" *ngIf="error?.region">
+            <span>{{error.region}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="mx-auto">
+          <button type="submit" class="btn btn-success " role="button" (click)="create()"
+            *ngIf="!cliente.id; else actualizar" [disabled]="!formCliente.form.valid">Crear</button>
+          <ng-template #actualizar>
+            <button type="submit" class="btn btn-success" role="button" (click)="update()"
+              [disabled]="!formCliente.form.valid">Actualizar</button>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
