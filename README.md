@@ -5,3 +5,9 @@ La aplicación web maneja autenticación y autorización por medio de JWT y cifr
 Todos los clientes y usuarios se almacenan en la BD PostgreSQL creada en heroku, en el caso de la foto solo se almacena un nombre único ,el cual se genera al momento de subir o editar una imagen. Y la imagen subida se almacena en Firebase.
 
 https://proyectoangular-587e7.web.app/clientes
+
+User :admin
+password:12345
+
+User:user
+password:12345
