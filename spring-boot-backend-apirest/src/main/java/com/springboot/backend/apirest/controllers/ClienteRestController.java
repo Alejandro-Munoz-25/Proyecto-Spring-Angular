@@ -37,8 +37,7 @@ import com.springboot.backend.apirest.models.entity.Region;
 import com.springboot.backend.apirest.models.service.IClientesService;
 import com.springboot.backend.apirest.models.service.IUploadFileService;
 
-@CrossOrigin(origins = { "http://192.168.1.75:4200", "*" }) // Configuración del CORS, permite peticiones del dominio de
-															// Angular
+@CrossOrigin(origins = { "ip", "*" }) // Configuración del CORS, permite peticiones del dominio de Angular
 @RestController
 @RequestMapping(path = "/api")
 public class ClienteRestController {
